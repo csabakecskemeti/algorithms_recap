@@ -33,13 +33,16 @@ public class HashTable<T> {
     public T get(int key) {
         int hashIndex = getHash(key);
         Entry arrayValue = arrayHash[hashIndex];
+//        int i = 0;
         while (arrayValue != null) {
             if (key == arrayValue.getKey()) {
                 return (T)arrayValue.getValue();
             } else {
                 arrayValue = arrayValue.next;
             }
+//            i++;
         }
+//        System.out.println("Iter to find: " + i);
         return null;
     }
 }

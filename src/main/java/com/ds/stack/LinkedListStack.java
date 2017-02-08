@@ -6,7 +6,7 @@ import com.ds.Node;
  * Created by kecso on 2/5/17.
  */
 public class LinkedListStack<T> {
-    Node top;
+    public Node top;
     public LinkedListStack() {
         top = null;
     }
