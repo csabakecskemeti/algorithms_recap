@@ -14,7 +14,7 @@ public class SelectionSort {
             int min = i;
             for (int j = i + 1; j < l; j++) {
                 if (array[j] < array[i]) {
-                    // update min index 
+                    // update min index
                     min = j;
                 }
             }
@@ -27,7 +27,7 @@ public class SelectionSort {
     }
 
     public static void main(String[] args) {
-        System.out.println("SELECT SORT - O[N^2)");
+        System.out.println("SELECT SORT - O(N^2)");
 
         int[] arr = {12, 3, 8, 4, 2, 9, 15, 1};
         System.out.println(Arrays.toString(arr));
