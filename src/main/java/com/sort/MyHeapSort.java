@@ -16,9 +16,6 @@ public class MyHeapSort {
 
     static void heapify(int[] array, int parent) {
         int left = (parent * 2) + 1;
-        if (parent == 0) {
-            left = 1;
-        }
         int right = left + 1;
         int greatest = parent;
         if (left <= total && (array[left] >= array[greatest])) {
