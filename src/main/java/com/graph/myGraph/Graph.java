@@ -2,6 +2,7 @@ package com.graph.myGraph;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.PriorityQueue;
 
 /**
  * Created by kecso on 2/25/17.
@@ -39,6 +40,41 @@ public class Graph<T> {
         while(edges != null) {
             System.out.println(src + " - " + edges.cost + " - " + edges.toVertex.value);
             edges = edges.next;
+        }
+    }
+
+    public void dijstra(T src, T dst) {
+        // TODO: display path
+        PriorityQueue<Edge> queue = new PriorityQueue<Edge>();
+        queue.add(new Edge(graph.get(src), 0));
+        int distance2Destination = -1;
+        while(!queue.isEmpty()) {
+            Edge current = queue.poll();
+            int distance = current.cost;
+            // scan edges
+            Edge neighbor = current.toVertex.head;
+            while(neighbor != null){
+//                System.out.println(distance2Destination);
+                Character neighborValue = (Character) neighbor.toVertex.value;
+                int neighborCost = neighbor.cost;
+                if(neighborValue == (Character) dst) {
+//                    System.out.println("curr: " + current.toVertex.value
+//                            + " distance " + distance + " nc " + neighborCost);
+                    distance2Destination = distance + neighborCost;
+                }
+//                System.out.println("curr: " + current.toVertex.value
+//                        + " distance " + distance + " to nb " + neighborValue + " nc " + neighborCost);
+                queue.add(new Edge(graph.get(neighborValue), distance + neighborCost));
+                neighbor = neighbor.next;
+            }
+            if (queue.isEmpty()) {
+                System.out.println("Destination unreachable");
+                return;
+            }
+            if (distance2Destination <= queue.peek().cost && distance2Destination > 0) {
+                System.out.println("Destination found in: " + distance2Destination);
+                return;
+            }
         }
     }
 }

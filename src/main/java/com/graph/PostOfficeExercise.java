@@ -57,8 +57,7 @@ public class PostOfficeExercise {
                 result[item.i][item.j] = distance;
                 coordinate[] neighbors = item.getNeighbors();
                 for (int i = 0; i < neighbors.length; i++) {
-                    if (!visited.contains(neighbors[i].i + "," + neighbors[i].j)
-                            && neighbors[i].i < 6
+                    if (neighbors[i].i < 6
                             && neighbors[i].i >= 0
                             && neighbors[i].j < 6
                             && neighbors[i].j >= 0) {
