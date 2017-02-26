@@ -5,6 +5,9 @@ package com.graph;
  */
 public class BFSDemo {
     public static void main(String[] args) {
+
+        String a = "(dt=='20170214')";
+        System.out.println(a.split("'")[1]);
         System.out.println("BFS DEMO");
         BFS graph = new BFS(6);
         graph.add(0,2);
