@@ -5,9 +5,11 @@ package com.graph.myGraph;
  */
 public class Edge implements Comparable{
     Vertex toVertex;
+    Vertex fromVertex;
     int cost;
     Edge next;
-    public Edge(Vertex toVertex, int cost) {
+    public Edge(Vertex fromVertex, Vertex toVertex, int cost) {
+        this.fromVertex = fromVertex;
         this.toVertex = toVertex;
         this.cost = cost;
     }

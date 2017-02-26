@@ -18,7 +18,7 @@ public class Graph<T> {
 
     public void addEdge(T src, T dst, int cost) {
         Vertex currentVertex = graph.get(src);
-        Edge newEdge = new Edge(graph.get(dst), cost);
+        Edge newEdge = new Edge(currentVertex, graph.get(dst), cost);
         if (currentVertex.head == null) {
             currentVertex.head = newEdge;
             currentVertex.tail = currentVertex.head;
@@ -44,36 +44,55 @@ public class Graph<T> {
     }
 
     public void dijstra(T src, T dst) {
-        // TODO: display path
+        HashMap<Character, Edge> shortestPathToVertex = new HashMap<Character, Edge>();
         PriorityQueue<Edge> queue = new PriorityQueue<Edge>();
-        queue.add(new Edge(graph.get(src), 0));
+
+        // setup
+        Edge startEdge = new Edge(graph.get(src), graph.get(src), 0);
+        queue.add(startEdge);
+        shortestPathToVertex.put((Character) startEdge.fromVertex.value, startEdge);
         int distance2Destination = -1;
+
         while(!queue.isEmpty()) {
             Edge current = queue.poll();
             int distance = current.cost;
             // scan edges
-            Edge neighbor = current.toVertex.head;
-            while(neighbor != null){
-//                System.out.println(distance2Destination);
-                Character neighborValue = (Character) neighbor.toVertex.value;
-                int neighborCost = neighbor.cost;
-                if(neighborValue == (Character) dst) {
-//                    System.out.println("curr: " + current.toVertex.value
-//                            + " distance " + distance + " nc " + neighborCost);
-                    distance2Destination = distance + neighborCost;
+            Edge edge = current.toVertex.head;
+            while(edge != null){
+                Character neighborValue = (Character) edge.toVertex.value;
+                int neighborCost = edge.cost + distance;
+                if(neighborValue == dst) {
+                    distance2Destination = neighborCost;
                 }
-//                System.out.println("curr: " + current.toVertex.value
-//                        + " distance " + distance + " to nb " + neighborValue + " nc " + neighborCost);
-                queue.add(new Edge(graph.get(neighborValue), distance + neighborCost));
-                neighbor = neighbor.next;
+                Edge currentEdge = new Edge(edge.fromVertex, edge.toVertex, neighborCost);
+                queue.add(currentEdge);
+
+                // to keep track of path
+                if(!shortestPathToVertex.containsKey(edge.toVertex.value)
+                        || shortestPathToVertex.get(edge.toVertex.value).cost > neighborCost) {
+                    shortestPathToVertex.put((Character) edge.toVertex.value, currentEdge);
+                }
+                edge = edge.next;
             }
             if (queue.isEmpty()) {
-                System.out.println("Destination unreachable");
+                System.out.println("\nDestination unreachable: " + src + " X " + dst);
                 return;
             }
             if (distance2Destination <= queue.peek().cost && distance2Destination > 0) {
-                System.out.println("Destination found in: " + distance2Destination);
-                return;
+                System.out.println("\nDestination " + dst + " found in: " + distance2Destination + " from " + src);
+
+                // display path
+                int cost = shortestPathToVertex.get((Character)dst).cost;
+                Character v = (Character) dst;
+                while(true) {
+                    System.out.print(v + " <- " + cost + " <- ");
+                    cost = shortestPathToVertex.get(shortestPathToVertex.get(v).fromVertex.value).cost;
+                    v = (Character)shortestPathToVertex.get(v).fromVertex.value;
+                    if ((Character)src == v) {
+                        System.out.println(v);
+                        return;
+                    }
+                }
             }
         }
     }
