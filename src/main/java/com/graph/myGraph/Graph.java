@@ -52,25 +52,26 @@ public class Graph<T> {
         queue.add(startEdge);
         shortestPathToVertex.put((Character) startEdge.fromVertex.value, startEdge);
         int distance2Destination = -1;
-
+        int iteration = 0;
         while(!queue.isEmpty()) {
             Edge current = queue.poll();
             int distance = current.cost;
             // scan edges
             Edge edge = current.toVertex.head;
             while(edge != null){
+                iteration++;
                 Character neighborValue = (Character) edge.toVertex.value;
                 int neighborCost = edge.cost + distance;
                 if(neighborValue == dst) {
                     distance2Destination = neighborCost;
                 }
                 Edge currentEdge = new Edge(edge.fromVertex, edge.toVertex, neighborCost);
-                queue.add(currentEdge);
 
-                // to keep track of path
+                // to keep track of path and enqueue path if it's better than before
                 if(!shortestPathToVertex.containsKey(edge.toVertex.value)
                         || shortestPathToVertex.get(edge.toVertex.value).cost > neighborCost) {
                     shortestPathToVertex.put((Character) edge.toVertex.value, currentEdge);
+                    queue.add(currentEdge);
                 }
                 edge = edge.next;
             }
@@ -90,6 +91,7 @@ public class Graph<T> {
                     v = (Character)shortestPathToVertex.get(v).fromVertex.value;
                     if ((Character)src == v) {
                         System.out.println(v);
+                        System.out.println("Iteration steps: " + iteration);
                         return;
                     }
                 }
