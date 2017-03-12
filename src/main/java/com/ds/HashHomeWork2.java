@@ -15,7 +15,7 @@ public class HashHomeWork2 {
             }
         }
         for (int i = 0; i < array.length; i++) {
-            System.out.println(hashTable.get(i) != null? hashTable.get(i): 0);
+//            System.out.println(hashTable.get(i) != null? hashTable.get(i): 0);
         }
     }
 }
