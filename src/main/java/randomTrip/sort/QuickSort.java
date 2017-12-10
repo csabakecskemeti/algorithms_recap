@@ -15,6 +15,17 @@ public class QuickSort {
         printArray(array2);
         quicksort(array2, 0, array.length - 1);
         printArray(array2);
+
+        int[] g = {10,9,8,7};
+        printArray(g);
+        quicksort(g, 0, g.length - 1);
+        printArray(g);
+
+        int[] s = {5,6,7,8};
+        printArray(s);
+        quicksort(s, 0, s.length - 1);
+        printArray(s);
+
     }
 
     private static void quicksort(int[] array, int left, int right) {
