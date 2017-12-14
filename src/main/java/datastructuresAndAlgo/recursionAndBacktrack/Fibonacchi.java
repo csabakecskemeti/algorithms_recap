@@ -1,5 +1,8 @@
 package datastructuresAndAlgo.recursionAndBacktrack;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by kecso on 12/10/17.
  */
@@ -17,7 +20,7 @@ public class Fibonacchi {
         System.out.println();
     }
 
-//     this is a demonstrartion how much tim ethe recursive will do the same calculation -> iter better
+//     this is a demonstrartion how much time the recursive will do the same calculation -> iter better
     private static int fbRecursive(int n) {
 //        base case
         if (n == 0) {
@@ -38,7 +41,7 @@ public class Fibonacchi {
         int i = 0;
         while (i <= n) {
             if (i == 0) {
-                result[0] = 0;
+                result[i] = 0;
             } else if (i == 1) {
                 result[i] = 1;
             } else {
