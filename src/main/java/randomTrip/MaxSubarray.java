@@ -29,6 +29,7 @@ public class MaxSubarray {
                 }
             } else {
                 curr = 0;
+                // ez nem is jo
                 startIdx = i + 1;
             }
         }

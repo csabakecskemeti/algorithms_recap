@@ -40,7 +40,7 @@ public class MyHeapSort {
     }
 
     public static void main(String[] args) {
-        System.out.println("HEAP SORT - O[NlogN), space O(N)");
+        System.out.println("HEAP SORT - O(NlogN), space O(N)");
 
         int[] arr = {12, 3, 8, 4, 2, 9, 15, 1, 7, 6};
         System.out.println("Original input: \n" + Arrays.toString(arr));
