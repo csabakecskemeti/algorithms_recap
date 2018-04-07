@@ -2,7 +2,10 @@ package randomTrip.tree;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 /**
  * Created by kecso on 2/20/18.
@@ -12,6 +15,7 @@ class Treenode {
     Treenode left;
     Treenode right;
     Treenode next;
+    Treenode levelHead;
     int val;
     public Treenode (int val) {
         this.val = val;
@@ -37,7 +41,7 @@ public class TreeTraversals {
         System.out.println("--inOrderLinker---------");
         Map<Integer, Treenode> map = new LinkedHashMap<>();
         inOrderLinker(head, 0, map);
-        Treenode levelHead = map.get(3);
+        Treenode levelHead = map.get(3).levelHead;
         System.out.print(levelHead.val);
         while(levelHead.next != null) {
             levelHead = levelHead.next;
@@ -59,14 +63,15 @@ public class TreeTraversals {
         head2.right.right.right = new Treenode(1114);
 
         System.out.println("=======levelOrder=========");
-        levelOrder(head2, 0);
-        System.out.println();
-        levelOrder(head2, 1);
-        System.out.println();
-        levelOrder(head2, 2);
-        System.out.println();
-        levelOrder(head2, 3);
-        System.out.println();
+        int h2height = treeHeight(head2);
+        System.out.println("height: " + h2height);
+        for(int i = 0; i < h2height; i++) {
+            levelOrder(head2, i);
+            System.out.println();
+        }
+        System.out.println("=======levelOrderBFS=========");
+        levelOrderBFS(head2);
+
         System.out.println("-----levelOrderLinker-----");
         levelOrderLinker(head2, 3);
 
@@ -113,6 +118,27 @@ public class TreeTraversals {
         }
     }
 
+    public static void levelOrderBFS(Treenode node) {
+        Queue<Treenode> queue = new LinkedList<>();
+        queue.add(node);
+        int s = queue.size();
+        while(s > 0) {
+            Treenode curr = queue.poll();
+            System.out.println(curr.val);
+            if (curr.left != null) {
+                queue.add(curr.left);
+            }
+            if (curr.right != null) {
+                queue.add(curr.right);
+            }
+            s--;
+            if (s == 0) {
+                System.out.println("---- next level ----");
+                s = queue.size();
+            }
+        }
+    }
+
     public static void inOrder(Treenode node) {
         if (node.left != null) {
             inOrder(node.left);
@@ -129,16 +155,27 @@ public class TreeTraversals {
         }
         if(map.containsKey(level)) {
             Treenode treenode = map.get(level);
-            while(treenode.next != null) {
-                treenode = treenode.next;
+            // this is just needed to be able to get the levelHead from the map >>
+            if (treenode.levelHead == null) {
+                node.levelHead = treenode;
+            } else {
+                node.levelHead = treenode.levelHead;
             }
+            // <<
             treenode.next = node;
-        } else {
-            map.put(level, node);
         }
-        //System.out.println(node.val);
+        map.put(level, node);
         if (node.right != null) {
             inOrderLinker(node.right, level + 1, map);
         }
+    }
+
+    public static int treeHeight(Treenode node) {
+        if (node == null) {
+            return 0;
+        }
+        int lh = treeHeight(node.left);
+        int rh = treeHeight(node.right);
+        return lh > rh ? lh + 1 : rh + 1;
     }
 }
